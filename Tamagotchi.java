@@ -110,7 +110,7 @@ public class Tamagotchi {
             // verifica peso
             if (peso <= 0) {
                 desnutrido();
-                return 1; // se ele morrer volta 1
+                return -1; // se ele morrer volta -1
             } else {
                 // fica com fome
                 sentirFome();
@@ -121,10 +121,11 @@ public class Tamagotchi {
             peso = peso - 4; // emagrece 4 kg
             if (peso <= 0) {
                 desnutrido();
-                return 1; // se ele morrer volta 1
+                return -1; // se ele morrer volta -1
             } else {
                 // come muito (opcao 2)
                 comer(2);
+                System.out.println("ATENCÃO: " + nome + "comeu muito depois do exercício\ne engordou 5kg!");
                 return 3; // retorna 3 p seguir o baile
             }
         }
