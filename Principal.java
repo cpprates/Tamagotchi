@@ -14,11 +14,8 @@ public class Principal {
             switch (rand) {
                 case 1: // Rand == 1 / Fome
 
-                    tamagotchi.sentirFome(); // sentimento
-                    tamagotchi.menuComer(); // menu
-
                     // pega informacao do usuário
-                    opcao = Teclado.leInt();
+                    opcao = Teclado.leInt(tamagotchi.fome());
                     if (tamagotchi.comer(opcao)) { // se retornar true é porque morreu
                         vivo = false; // tamagotchi morre
                     }
@@ -26,11 +23,8 @@ public class Principal {
                     break;
                 case 2: // Rand == 2 / Sono
 
-                    tamagotchi.sentirSono(); // sentimento
-                    tamagotchi.menuSono(); // menu
-
                     // pega informacao do usuario
-                    opcao = Teclado.leInt();
+                    opcao = Teclado.leInt(tamagotchi.sono());
                     if (tamagotchi.dormir(opcao)) { // se retornar true é porque morreu
                         vivo = false; // tamagotchi morre
                     }
@@ -39,22 +33,16 @@ public class Principal {
 
                 case 3: // Rand == 3 / Tédio
 
-                    tamagotchi.sentirTedio(); // sentimento
-                    tamagotchi.menuExercicio(); // menu
-
                     // pega informacao do usuário
-                    opcao = Teclado.leInt();
+                    opcao = Teclado.leInt(tamagotchi.tedio());
                     int res = tamagotchi.exercitar(opcao);
                     if (res == -1) { // se retornar -1 é porque morreu
                         vivo = false; // tamagotchi morre
 
                     } else if (res == 2) { // se retornar 2 é pra mostrar menu de fome
-                        
-                        tamagotchi.sentirFome();
-                        tamagotchi.menuComer();
-                        
+
                         // pega informacao do usuário
-                        opcao = Teclado.leInt();
+                        opcao = Teclado.leInt(tamagotchi.fome());
                         if (tamagotchi.comer(opcao)) { // se retornar true é porque morreu
                             vivo = false; // tamagotchi morre
                         }
