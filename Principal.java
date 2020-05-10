@@ -2,65 +2,65 @@ public class Principal {
     public static void main(String[] args) {
 
         // Pede que o usuário digite o nome do Tamagotchi e o cria
-        String nome = Teclado.leString("Digite um nome para o seu Tamagotchi:");
-        Tamagotchi tamagotchi = new Tamagotchi(nome);
-        status(tamagotchi); //imprime status
+        Tamagotchi tamagotchi = new Tamagotchi(Teclado.leString("Digite o nome do seu Tamagotchi:"));
+        status(tamagotchi); // imprime status
+        boolean vivo = true;
 
-        int range = 3; // 3 opcoes
-        while (true) {
+        int range = 3; // 3 opcoes de sentimento para o random
+
+        while (vivo) {
             int rand = (int) (Math.random() * range) + 1; // + 1 pra não incluir o 0
-            // System.out.println(rand);
-            if (rand == 1) { // fome
-                tamagotchi.sentirFome(); // sentimento
-                tamagotchi.menuComer(); // menu
+            int opcao;
+            switch (rand) {
+                case 1: // Rand == 1 / Fome
 
-                // pega informacao do usuário
-                int opcao = Teclado.leInt();
+                    tamagotchi.sentirFome(); // sentimento
+                    tamagotchi.menuComer(); // menu
 
-                if (tamagotchi.comer(opcao)) { // se voltar true é pq o bicho morreu
-                    status(tamagotchi);
-                    // para o loop pq o bicho morreu
-                    break;
-                }
-                status(tamagotchi); // status do bicho
-            } else if (rand == 2) { // sono
-                tamagotchi.sentirSono(); // sentimento
-                tamagotchi.menuSono(); // menu
-                
-                // pega info do usuario
-                int opcao = Teclado.leInt();
-                if (tamagotchi.dormir(opcao)) {
-                    // se true é pq ele morreu
-                    status(tamagotchi);
-                    break;
-                }
-                // imprime status
-                status(tamagotchi);
-
-            } else { // rand == 3 | tédio
-                tamagotchi.sentirTedio(); // sentimento
-                tamagotchi.menuExercicio(); // menu
-                // pega info do usuário
-                int opcao = Teclado.leInt();
-                int res = tamagotchi.exercitar(opcao);
-                if (res == -1) {
-                    // se voltar 1 é pq ele morreu
-                    status(tamagotchi);
-                    break;
-                } else if (res == 2) {
-                    // se voltar 2 é pra mostrar menu de fome
-                    tamagotchi.menuComer();
+                    // pega informacao do usuário
                     opcao = Teclado.leInt();
-                    if (tamagotchi.comer(opcao)) {
-                        status(tamagotchi);
-                        // para o loop pq o bicho morreu
-                        break;
+                    if (tamagotchi.comer(opcao)) { // se retornar true é porque morreu
+                        vivo = false; // tamagotchi morre
                     }
-                    // status do bicho
+                    status(tamagotchi); // status do tamagotchi
+                    break;
+                case 2: // Rand == 2 / Sono
+
+                    tamagotchi.sentirSono(); // sentimento
+                    tamagotchi.menuSono(); // menu
+
+                    // pega informacao do usuario
+                    opcao = Teclado.leInt();
+                    if (tamagotchi.dormir(opcao)) { // se retornar true é porque morreu
+                        vivo = false; // tamagotchi morre
+                    }
+                    status(tamagotchi); // status do tamagotchi
+                    break;
+
+                case 3: // Rand == 3 / Tédio
+
+                    tamagotchi.sentirTedio(); // sentimento
+                    tamagotchi.menuExercicio(); // menu
+
+                    // pega informacao do usuário
+                    opcao = Teclado.leInt();
+                    int res = tamagotchi.exercitar(opcao);
+                    if (res == -1) { // se retornar -1 é porque morreu
+                        vivo = false; // tamagotchi morre
+
+                    } else if (res == 2) { // se retornar 2 é pra mostrar menu de fome
+                        
+                        tamagotchi.sentirFome();
+                        tamagotchi.menuComer();
+                        
+                        // pega informacao do usuário
+                        opcao = Teclado.leInt();
+                        if (tamagotchi.comer(opcao)) { // se retornar true é porque morreu
+                            vivo = false; // tamagotchi morre
+                        }
+                    } // se retornar 3 é para continuar
                     status(tamagotchi);
-                } else if (res == 3) { // se 3 é pra seguir o baile
-                    status(tamagotchi);
-                }
+                    break;
             }
         }
     }
