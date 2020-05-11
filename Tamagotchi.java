@@ -114,6 +114,7 @@ public class Tamagotchi {
                 if (isMorto()) {
                     return true; // morreu
                 } else {
+                    System.out.println(toString());
                     int opcao = Teclado.leInt(fome());
                     while (opcao > 3 || opcao < 1) {
                         opcao = Teclado.leInt("Valor inválido, tente novamente:");
