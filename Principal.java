@@ -16,6 +16,10 @@ public class Principal {
 
                     // pega informacao do usuário
                     opcao = Teclado.leInt(tamagotchi.fome());
+                    while (opcao > 3 || opcao < 1) {
+                        opcao = Teclado.leInt("Valor inválido, tente novamente:");
+                    }
+
                     if (tamagotchi.comer(opcao)) { // se retornar true é porque morreu
                         vivo = false; // tamagotchi morre
                     }
@@ -25,6 +29,10 @@ public class Principal {
 
                     // pega informacao do usuario
                     opcao = Teclado.leInt(tamagotchi.sono());
+                    while (opcao > 2 || opcao < 1) {
+                        opcao = Teclado.leInt("Valor inválido, tente novamente:");
+                    }
+
                     if (tamagotchi.dormir(opcao)) { // se retornar true é porque morreu
                         vivo = false; // tamagotchi morre
                     }
@@ -35,6 +43,10 @@ public class Principal {
 
                     // pega informacao do usuário
                     opcao = Teclado.leInt(tamagotchi.tedio());
+                    while (opcao > 2 || opcao < 1) {
+                        opcao = Teclado.leInt("Valor inválido, tente novamente:");
+                    }
+
                     int res = tamagotchi.exercitar(opcao);
                     if (res == -1) { // se retornar -1 é porque morreu
                         vivo = false; // tamagotchi morre
@@ -43,6 +55,10 @@ public class Principal {
 
                         // pega informacao do usuário
                         opcao = Teclado.leInt(tamagotchi.fome());
+                        while (opcao > 3 || opcao < 1) {
+                            opcao = Teclado.leInt("Valor inválido, tente novamente:");
+                        }
+
                         if (tamagotchi.comer(opcao)) { // se retornar true é porque morreu
                             vivo = false; // tamagotchi morre
                         }

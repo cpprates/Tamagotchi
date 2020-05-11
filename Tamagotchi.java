@@ -142,7 +142,7 @@ public class Tamagotchi {
         } else if (peso <= 0) { // desnutrido
             System.out.println("Morri desnutrido. Meu peso foi a 0 kg.");
             return true;
-        } else if (peso >= 20) { // obeso
+        } else if (peso > 20) { // obeso
             System.out.println("Explodi de tão gordo. Meu peso passou de 20 kg.");
             return true;
         }
