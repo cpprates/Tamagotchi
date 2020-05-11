@@ -47,22 +47,10 @@ public class Principal {
                         opcao = Teclado.leInt("Valor inválido, tente novamente:");
                     }
 
-                    int res = tamagotchi.exercitar(opcao);
-                    if (res == -1) { // se retornar -1 é porque morreu
+                    boolean res = tamagotchi.exercitar(opcao);
+                    if (res) { // se retornar -1 é porque morreu
                         vivo = false; // tamagotchi morre
-
-                    } else if (res == 2) { // se retornar 2 é pra mostrar menu de fome
-
-                        // pega informacao do usuário
-                        opcao = Teclado.leInt(tamagotchi.fome());
-                        while (opcao > 3 || opcao < 1) {
-                            opcao = Teclado.leInt("Valor inválido, tente novamente:");
-                        }
-
-                        if (tamagotchi.comer(opcao)) { // se retornar true é porque morreu
-                            vivo = false; // tamagotchi morre
-                        }
-                    } // se retornar 3 é para continuar
+                    }
                     status(tamagotchi);
                     break;
             }

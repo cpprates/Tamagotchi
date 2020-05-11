@@ -107,32 +107,38 @@ public class Tamagotchi {
         return false; // retorna false porque ta vivo
     }
 
-    public int exercitar(int exercitar) {
-
+    public boolean exercitar(int exercitar) {
         switch (exercitar) {
             case 1: // caminhar 10 min
                 peso = peso - 1; // emagrece 1 kg
                 if (isMorto()) {
-                    return -1; // morreu
+                    return true; // morreu
                 } else {
-                    return 2;
+                    int opcao = Teclado.leInt(fome());
+                    while (opcao > 3 || opcao < 1) {
+                        opcao = Teclado.leInt("Valor inválido, tente novamente:");
+                    }
+                    if (comer(opcao)) {
+                        return true; // morreu
+                    }
+                    return false;
                 }
 
             case 2: // correr 10 min
                 peso = peso - 4; // emagrece 4 kg
                 if (isMorto()) {
-                    return -1;
+                    return true;
                 } else {
                     comer(2); // come muito (opcao 2)
                     System.out.println("ATENCÃO: " + nome + " comeu muito depois do exercício\ne engordou 5kg!");
                     if (isMorto()) {
-                        return -1;
+                        return true;
                     } else {
-                        return 3;
+                        return false;
                     }
                 }
         }
-        return 3; // retorna 3 para seguir
+        return false;
     }
 
     public boolean isMorto() { // se morre retorna true
