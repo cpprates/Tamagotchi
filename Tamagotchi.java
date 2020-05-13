@@ -9,6 +9,7 @@ public class Tamagotchi {
         peso = 1; // kg
     }
 
+    // getters e setters
     public void setNome(String nome) {
         this.nome = nome;
     }
@@ -39,120 +40,154 @@ public class Tamagotchi {
 
     // Sentimentos
     public String fome() {
-        return "- " + nome + ": Nhamm fominha...\nEscolha uma opcão:\n1). Comer pouco\n2). Comer muito\n3). Não comer";
+        String fome = " *    *  *  *  *****  **** \n" + " * *  *  *  *  *   *  *    \n"
+                + " *  * *  ****  * * *  *    \n" + " *    *  *  *  *   *  **** \n" + "           *               \n"
+                + "          *                \n" + "   *******                 \n" + "  *       *                \n"
+                + " *  ** **  *               \n" + " *  *****  *               \n" + " *  *   *  *               \n"
+                + " *  *****  *               \n" + "  *********                \n" + "- " + nome
+                + ": Estou com fome!\n" + "Escolha uma opcão:\n1) Comer pouco\n2) Comer muito\n3) Não comer\n";
+        return fome;
     }
 
     public String sono() {
-        return "- " + nome + ": Estou com sono zZzzZ\nEscolha uma opcão:\n1). Dormir\n2). Permanecer acordado";
+        String sono = "              ****  ****  ****\n" + "                 *     *     *\n"
+                + "                *     *     * \n" + "               *     *     *  \n"
+                + "              *     *     *   \n" + "              ****  ****  ****\n"
+                + "           *                  \n" + "          *                   \n"
+                + "   *******                    \n" + "  *       *                   \n"
+                + " *  ** **  *                  \n" + " *         *                  \n"
+                + " *    *    *                  \n" + "  *********                   \n" + "- " + nome
+                + ": Estou com sono!\n" + "Escolha uma opcão:\n1) Dormir\n2) Permanecer acordado\n";
+        return sono;
     }
 
     public String tedio() {
-        return "- " + nome
-                + ": Nada pra fazer, tédio :/\nEscolha uma opcão:\n1). Caminhar 10 minutos\n2). Correr 10 minutos";
+        String tedio = " ******  *     ***** ***** \n" + " *   **  *     *     *     \n"
+                + " ****    *     ****  ****  \n" + " *   **  *     *     *     \n" + " ******  ****  ***** ***** \n"
+                + "           *               \n" + "          *                \n" + "   *******                 \n"
+                + "  *       *                \n" + " *  ** **  *               \n" + " *         *               \n"
+                + " *  *****  *               \n" + "  *********                \n" + "- " + nome
+                + ": Estou com tédio!\n" + "Escolha uma opcão:\n1) Caminhar 10 minutos\n2) Correr 10 minutos\n";
+        return tedio;
     }
 
     // Acões
-    public boolean comer(int comer) {
+    public void comer(int comer) {
 
         switch (comer) {
             case 1: // pouco
                 peso = peso + 1;
-                if (isMorto()) {
-                    return true;
-                }
                 break;
 
             case 2: // muito
                 peso = peso + 5;
-                if (isMorto()) {
-                    return true;
-                } else {
+                if (!isObeso()) {
                     dormir(1); // deve dormir logo depois
                 }
                 break;
 
             case 3: // não comer
                 peso = peso - 2;
-
-                if (isMorto()) {
-                    return true;
-                }
                 break;
         }
-        return false;
     }
 
     int acordado = 0;
 
-    public boolean dormir(int dormir) {
+    public void dormir(int dormir) {
 
         switch (dormir) {
             case 1: // dormir
                 idade = idade + 1;
-                if (isMorto()) {
-                    return true;
-                }
+                acordado = 0;
                 break;
             case 2: // permanecer acordado
                 acordado = acordado + 1;
-                if (acordado >= 5) { // se permanecer acordado por 5x, dorme automaticamente
+                // se permanecer acordado por 5x, dorme automaticamente
+                if (acordado >= 5) {
                     acordado = 0;
                     idade = idade + 1; // dorme automaticamente
                 }
-                if (isMorto()) {
-                    return true;
-                }
                 break;
         }
-        return false; // retorna false porque ta vivo
     }
 
-    public boolean exercitar(int exercitar) {
+    public void exercitar(int exercitar) {
         switch (exercitar) {
             case 1: // caminhar 10 min
                 peso = peso - 1; // emagrece 1 kg
-                if (isMorto()) {
-                    return true; // morreu
-                } else {
+
+                if (!isDesnutrido()) {
                     System.out.println(toString());
                     int opcao = Teclado.leInt(fome());
                     while (opcao > 3 || opcao < 1) {
                         opcao = Teclado.leInt("Valor inválido, tente novamente:");
                     }
-                    if (comer(opcao)) {
-                        return true; // morreu
-                    }
-                    return false;
+                    comer(opcao);
                 }
+                break;
 
             case 2: // correr 10 min
                 peso = peso - 4; // emagrece 4 kg
-                if (isMorto()) {
-                    return true;
-                } else {
+
+                if (!isDesnutrido()) {
                     comer(2); // come muito (opcao 2)
-                    System.out.println("ATENCÃO: " + nome + " comeu muito depois do exercício\ne engordou 5kg!");
-                    if (isMorto()) {
-                        return true;
-                    } else {
-                        return false;
-                    }
                 }
+                break;
         }
-        return false;
     }
 
-    public boolean isMorto() { // se morre retorna true
-        if (idade > 14) { // velho
-            System.out.println("Morri de velho. Cheguei em 15 dias de vida.");
+    // verificadores de situacão vital
+    public boolean isVelho() {
+        return this.idade > 14 ? true : false;
+    }
+
+    public boolean isDesnutrido() {
+        return this.peso <= 0 ? true : false;
+    }
+
+    public boolean isObeso() {
+        return this.peso > 20 ? true : false;
+    }
+
+    // se o tamagotchi morrer retorna true
+    public boolean isMorto() {
+        if (isVelho()) { // velho
+            morrerIdade();
             return true;
-        } else if (peso <= 0) { // desnutrido
-            System.out.println("Morri desnutrido. Meu peso foi a 0 kg.");
+        } else if (isDesnutrido()) { // desnutrido
+            morrerDesnutrido();
             return true;
-        } else if (peso > 20) { // obeso
-            System.out.println("Explodi de tão gordo. Meu peso passou de 20 kg.");
+        } else if (isObeso()) { // obeso
+            morrerExplodir();
             return true;
+        } else {
+            System.out.println(toString());
+            return false;
         }
-        return false;
+    }
+
+    public void morrerIdade() {
+        String velho = "   *******                 \n" + "  *       *                \n"
+                + " *  ** **  *               \n" + " *         *               \n" + " *   ***   *               \n"
+                + " *  *   *  *               \n" + "  *********                \n"
+                + "Morri de velho. Cheguei em 15 dias de vida!";
+        System.out.println(velho);
+    }
+
+    public void morrerDesnutrido() {
+        String desnutrido = "   ****                 \n" + "  *    *                \n" + " * *  * *               \n"
+                + " *  **  *               \n" + " * *  * *               \n" + "  ******                \n"
+                + "Morri desnutrido. Meu peso foi a 0 kg!";
+        System.out.println(desnutrido);
+    }
+
+    public void morrerExplodir() {
+        String obeso = "    ***********                 \n" + "  *             *                \n"
+                + " *     ** **     *               \n" + " *               *               \n"
+                + " *     *****     *               \n" + " *    *     *    *               \n"
+                + " *    *     *    *               \n" + "  ***************                \n"
+                + "Explodi de tão gordo. Meu peso passou de 20 kg!";
+        System.out.println(obeso);
     }
 }
